@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "723290070199",
+    "firebase_url": "https://chatproj-282d8.firebaseio.com",
+    "project_id": "chatproj-282d8",
+    "storage_bucket": "chatproj-282d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723290070199:android:63146e51d1cc0bb8b94132",
+        "android_client_info": {
+          "package_name": "android.gava.chatfortwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723290070199-ig3f49v0t4pbd28h0u65guc1pt18ifdk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.gava.chatfortwo",
+            "certificate_hash": "f3a8d635df34b5302db56493cb7eba3112d3e459"
+          }
+        },
+        {
+          "client_id": "723290070199-sfo5fl891vgbsfreeq4kmn6s1muigqto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1xGniUXXEYsnmTztYtyVX3H7k6J6SWgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723290070199-sfo5fl891vgbsfreeq4kmn6s1muigqto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
