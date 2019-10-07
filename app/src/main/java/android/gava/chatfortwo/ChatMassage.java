@@ -6,6 +6,7 @@ public class ChatMassage {
     String name;
     String imageUrl;
 
+
     public ChatMassage () {
 
     }
@@ -40,4 +41,6 @@ public class ChatMassage {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
 }

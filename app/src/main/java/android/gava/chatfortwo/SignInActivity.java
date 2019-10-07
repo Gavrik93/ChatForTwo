@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -33,12 +37,17 @@ public class SignInActivity extends AppCompatActivity {
 
     private boolean loginModeActive;
 
+    FirebaseDatabase database;
+    DatabaseReference usersDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        usersDatabaseReference = database.getReference().child("users");
 
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -55,80 +64,137 @@ public class SignInActivity extends AppCompatActivity {
 
             }
         });
+
+        //save users authentication
+
+        if (auth.getCurrentUser() != null){
+            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        }
     }
 
     private void loginSignUpUser(String email, String password) {
 
         if (loginModeActive) {
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = auth.getCurrentUser();
-                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                               // updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                               // updateUI(null);
+            if (passwordEditText.getText().toString().trim().length() < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters",
+                        Toast.LENGTH_SHORT).show();
+            } else if (emailEditText.getText().toString().trim().equals("")) {
+                Toast.makeText(this, "Empty line, please input your email",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    FirebaseUser user = auth.getCurrentUser();
+
+                                    Intent intent = new Intent(SignInActivity.this,
+                                            MainActivity.class);
+                                    intent.putExtra("userName",nameEditText.getText().toString().trim());
+                                    startActivity(intent);
+                                    //updateUI();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    // updateUI(null);
+                                }
+
+                                // ...
                             }
 
-                            // ...
-                        }
 
+                        });
 
-                    });
+            }
+
 
         } else {
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = auth.getCurrentUser();
-                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                                // updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                // updateUI(null);
-                            }
 
-                        }
-                    });
+            if(!passwordEditText.getText().toString().trim().equals(
+                    repeatPasswordEditText.getText().toString().trim()
+            )) {
+                Toast.makeText(this, "Password don't match",
+                        Toast.LENGTH_SHORT).show();
+            } else if (passwordEditText.getText().toString().trim().length() < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters",
+                        Toast.LENGTH_SHORT).show();
+            } else if (emailEditText.getText().toString().trim().equals("")){
+                Toast.makeText(this, "Empty line, please input your email",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    createUser(user);
+                                    Intent intent = new Intent(SignInActivity.this,
+                                            MainActivity.class);
+                                    intent.putExtra("userName",nameEditText.getText().toString().trim());
+                                    startActivity(intent);
+                                    // updateUI(user);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    // updateUI(null);
+                                }
+
+                            }
+                        });
+
+            }
 
         }
 
+    }
+
+
+
+    private void createUser(FirebaseUser firebaseUser) {
+        User user = new User();
+        user.setId(firebaseUser.getUid());
+        user.setEmail(firebaseUser.getEmail());
+        user.setName(nameEditText.getText().toString().trim());
+
+        usersDatabaseReference.push().setValue(user);
     }
 
 
     public void toggleLoginMode(View view) {
 
 
+
         if (loginModeActive) {
             loginModeActive = false;
             loginSignUpButton.setText("Sign up");
-            toggleLoginSignUpTextView.setText("Or, log in");
+            toggleLoginSignUpTextView.setText("Tap to log in");
             repeatPasswordEditText.setVisibility(View.VISIBLE);
 
 
         } else {
             loginModeActive = true;
             loginSignUpButton.setText("Log in");
-            toggleLoginSignUpTextView.setText("Or, sign up");
+            toggleLoginSignUpTextView.setText("Tap to sign up");
             repeatPasswordEditText.setVisibility(View.INVISIBLE);
         }
 
 
+
+    }
+
+    //this part fix bug when i was in chat activity using back key i return to login activity
+    @Override
+    public void onBackPressed () {
 
     }
 }
