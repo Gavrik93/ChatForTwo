@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,12 +29,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView messageListView;
-    private ChatMassageAdapter adapter;
+    private ChatMessageAdapter adapter;
     private ProgressBar progressBar;
     private ImageButton sendImageButton;
     private Button sendMassageButton;
@@ -83,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         messageListView = findViewById(R.id.massageListView);
-        List<ChatMassage> chatMassages = new ArrayList<>();
-        adapter = new ChatMassageAdapter(this, R.layout.massage_item,chatMassages);
+        List<ChatMessage> chatMassages = new ArrayList<>();
+        adapter = new ChatMessageAdapter(this, R.layout.message_item,chatMassages);
 
         messageListView.setAdapter(adapter);
         //set invisible for progressBar
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         sendMassageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatMassage massage = new ChatMassage();
+                ChatMessage massage = new ChatMessage();
                 massage.setText(messageEditText.getText().toString());
                 massage.setName(userName);
                 massage.setSender(auth.getCurrentUser().getUid());
@@ -183,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
         messagesChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ChatMassage message =
-                        dataSnapshot.getValue(ChatMassage.class);
+                ChatMessage message =
+                        dataSnapshot.getValue(ChatMessage.class);
 
                 if (message.getSender().equals(auth.getCurrentUser().getUid())
                         && message.getRecipient().equals(recipientUserId)) {

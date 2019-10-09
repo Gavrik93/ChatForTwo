@@ -1,6 +1,6 @@
 package android.gava.chatfortwo;
 
-public class ChatMassage {
+public class ChatMessage {
 
     private String text;
     private String name;
@@ -10,11 +10,11 @@ public class ChatMassage {
     private boolean isMine;
 
 
-    public ChatMassage () {
+    public ChatMessage() {
 
     }
 
-    public ChatMassage(String text, String name, String imageUrl,
+    public ChatMessage(String text, String name, String imageUrl,
                        String sender, String recipient, boolean isMine) {
         this.text = text;
         this.name = name;

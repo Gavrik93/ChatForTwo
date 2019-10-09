@@ -1,7 +1,6 @@
 package android.gava.chatfortwo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
-public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
+public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
-    private List <ChatMassage> message;
+    private List<ChatMessage> message;
     private Activity activity;
 
-    public ChatMassageAdapter(Activity context, int resource,
-                                List<ChatMassage> messages) {
+    public ChatMessageAdapter(Activity context, int resource,
+                              List<ChatMessage> messages) {
         super(context, resource, messages);
 
         this.message = messages;
@@ -28,25 +25,25 @@ public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
 
 
     @Override
-    public View getView(int position,View convertView,  ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
-        LayoutInflater layoutInflater = (LayoutInflater)activity
+        LayoutInflater layoutInflater = (LayoutInflater) activity
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        ChatMassage chatMassage = getItem(position);
+        ChatMessage chatMessage = getItem(position);
         int layoutRecource = 0;
         int viewType = getItemViewType(position);
 
         if (viewType == 0) {
-            layoutRecource = R.layout.my_massage_item;
-        }else {
-            layoutRecource = R.layout.your_massage_item;
+            layoutRecource = R.layout.my_message_item;
+        } else {
+            layoutRecource = R.layout.your_message_item;
         }
 
 
-        if(convertView != null) {
-            viewHolder = (ViewHolder)convertView.getTag();
+        if (convertView != null) {
+            viewHolder = (ViewHolder) convertView.getTag();
         } else {
             convertView = layoutInflater.inflate(
                     layoutRecource, parent, false
@@ -59,8 +56,9 @@ public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
 
 
 
-        viewHolder.messageTextView.setText(chatMassage.getText());
-        viewHolder.nameTextView.setText(chatMassage.getName());
+            viewHolder.messageTextView.setText(chatMessage.getText());
+            viewHolder.nameTextView.setText(chatMessage.getName());
+
 
         return convertView;
     }
@@ -69,8 +67,8 @@ public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
     public int getItemViewType(int position) {
 
         int flag;
-        ChatMassage chatMassage = message.get(position);
-        if (chatMassage.isMine()){
+        ChatMessage chatMassage = message.get(position);
+        if (chatMassage.isMine()) {
             flag = 0;
         } else {
             flag = 1;
@@ -78,6 +76,10 @@ public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
 
         return flag;
 
+    }
+    @Override
+    public int getViewTypeCount() {
+        return 2;
     }
 
     private class ViewHolder {
