@@ -38,35 +38,29 @@ public class ChatMassageAdapter extends ArrayAdapter<ChatMassage> {
         int layoutRecource = 0;
         int viewType = getItemViewType(position);
 
-
-        if(convertView == null){
-            convertView = ((Activity)getContext()).getLayoutInflater()
-                    .inflate(R.layout.massage_item, parent, false);
+        if (viewType == 0) {
+            layoutRecource = R.layout.my_massage_item;
+        }else {
+            layoutRecource = R.layout.your_massage_item;
         }
 
-        ImageView photoImageView = convertView
-                .findViewById(R.id.photoImageView);
-        TextView textTextView = convertView
-                .findViewById(R.id.textTextView);
-        TextView nameTextView = convertView
-                .findViewById(R.id.nameTextView);
 
-        ChatMassage message = getItem(position);
-
-        boolean isText = message.getImageUrl() == null;
-        if(isText){
-            textTextView.setVisibility(View.VISIBLE);
-            photoImageView.setVisibility(View.GONE);
-            textTextView.setText(message.getText());
+        if(convertView != null) {
+            viewHolder = (ViewHolder)convertView.getTag();
         } else {
-            textTextView.setVisibility(View.GONE);
-            photoImageView.setVisibility(View.VISIBLE);
-            Glide.with(photoImageView.getContext())
-                        .load(message.getImageUrl())
-                        .into(photoImageView);
+            convertView = layoutInflater.inflate(
+                    layoutRecource, parent, false
+            );
+
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
         }
 
-        nameTextView.setText(message.getName());
+
+
+
+        viewHolder.messageTextView.setText(chatMassage.getText());
+        viewHolder.nameTextView.setText(chatMassage.getName());
 
         return convertView;
     }
