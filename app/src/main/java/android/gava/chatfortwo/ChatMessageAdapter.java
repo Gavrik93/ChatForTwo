@@ -54,10 +54,8 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
         }
 
 
-
-
-            viewHolder.messageTextView.setText(chatMessage.getText());
-            viewHolder.nameTextView.setText(chatMessage.getName());
+        viewHolder.messageTextView.setText(chatMessage.getText());
+        viewHolder.nameTextView.setText(chatMessage.getName());
 
 
         return convertView;
@@ -77,6 +75,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
         return flag;
 
     }
+
     @Override
     public int getViewTypeCount() {
         return 2;

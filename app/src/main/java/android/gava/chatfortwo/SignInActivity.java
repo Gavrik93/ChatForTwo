@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private static final  String TAG = "SignInActivity";
+    private static final String TAG = "SignInActivity";
 
     private FirebaseAuth auth;
 
@@ -67,7 +67,7 @@ public class SignInActivity extends AppCompatActivity {
 
         //save users authentication
 
-        if (auth.getCurrentUser() != null){
+        if (auth.getCurrentUser() != null) {
             startActivity(new Intent(SignInActivity.this, UserListActivity.class));
         }
     }
@@ -93,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(SignInActivity.this,
                                             UserListActivity.class);
-                                    intent.putExtra("userName",nameEditText.getText().toString().trim());
+                                    intent.putExtra("userName", nameEditText.getText().toString().trim());
                                     startActivity(intent);
                                     //updateUI();
                                 } else {
@@ -115,7 +115,7 @@ public class SignInActivity extends AppCompatActivity {
 
         } else {
 
-            if(!passwordEditText.getText().toString().trim().equals(
+            if (!passwordEditText.getText().toString().trim().equals(
                     repeatPasswordEditText.getText().toString().trim()
             )) {
                 Toast.makeText(this, "Password don't match",
@@ -123,7 +123,7 @@ public class SignInActivity extends AppCompatActivity {
             } else if (passwordEditText.getText().toString().trim().length() < 6) {
                 Toast.makeText(this, "Password must be at least 6 characters",
                         Toast.LENGTH_SHORT).show();
-            } else if (emailEditText.getText().toString().trim().equals("")){
+            } else if (emailEditText.getText().toString().trim().equals("")) {
                 Toast.makeText(this, "Empty line, please input your email",
                         Toast.LENGTH_SHORT).show();
             } else {
@@ -138,7 +138,7 @@ public class SignInActivity extends AppCompatActivity {
                                     createUser(user);
                                     Intent intent = new Intent(SignInActivity.this,
                                             UserListActivity.class);
-                                    intent.putExtra("userName",nameEditText.getText().toString().trim());
+                                    intent.putExtra("userName", nameEditText.getText().toString().trim());
                                     startActivity(intent);
                                     // updateUI(user);
                                 } else {
@@ -159,7 +159,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-
     private void createUser(FirebaseUser firebaseUser) {
         User user = new User();
         user.setId(firebaseUser.getUid());
@@ -171,7 +170,6 @@ public class SignInActivity extends AppCompatActivity {
 
 
     public void toggleLoginMode(View view) {
-
 
 
         if (loginModeActive) {
@@ -189,12 +187,11 @@ public class SignInActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     //this part fix bug when i was in chat activity using back key i return to login activity
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
 
     }
 }

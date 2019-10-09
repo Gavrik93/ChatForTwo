@@ -78,11 +78,9 @@ public class MainActivity extends AppCompatActivity {
         messageEditText = findViewById(R.id.massageEditText);
 
 
-
-
         messageListView = findViewById(R.id.massageListView);
         List<ChatMessage> chatMassages = new ArrayList<>();
-        adapter = new ChatMessageAdapter(this, R.layout.message_item,chatMassages);
+        adapter = new ChatMessageAdapter(this, R.layout.message_item, chatMassages);
 
         messageListView.setAdapter(adapter);
         //set invisible for progressBar
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if (s.toString().trim().length() > 0){
+                if (s.toString().trim().length() > 0) {
                     sendMassageButton.setEnabled(true);
                 } else {
                     sendMassageButton.setEnabled(false);
@@ -197,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -235,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.sign_out:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));

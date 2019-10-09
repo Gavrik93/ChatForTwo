@@ -41,7 +41,7 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
 
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             userName = intent.getStringExtra(userName);
         }
 
@@ -56,12 +56,12 @@ public class UserListActivity extends AppCompatActivity {
 
     private void attachUserDatabaseReferenceListener() {
         usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-        if(usersChildEventListener == null) {
+        if (usersChildEventListener == null) {
             usersChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     User user = dataSnapshot.getValue(User.class);
-                    if(!user.getId().equals(auth.getCurrentUser().getUid())){
+                    if (!user.getId().equals(auth.getCurrentUser().getUid())) {
                         user.setAvatarMockUpResource(R.drawable.ic_people_black_24dp);
                         userArrayList.add(user);
                         userAdapter.notifyDataSetChanged();
@@ -138,7 +138,7 @@ public class UserListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.sign_out:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(UserListActivity.this, SignInActivity.class));
@@ -151,10 +151,9 @@ public class UserListActivity extends AppCompatActivity {
     }
 
 
-
     //this part fix bug when i was in chat activity using back key i return to login activity
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
 
     }
 
