@@ -45,13 +45,11 @@ public class UserListActivity extends AppCompatActivity {
             userName = intent.getStringExtra(userName);
         }
 
-
         auth = FirebaseAuth.getInstance();
 
         userArrayList = new ArrayList<>();
         buildRecycleView();
         attachUserDatabaseReferenceListener();
-
     }
 
     private void attachUserDatabaseReferenceListener() {

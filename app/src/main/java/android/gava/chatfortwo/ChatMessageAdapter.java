@@ -32,13 +32,13 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         ChatMessage chatMessage = getItem(position);
-        int layoutRecource = 0;
+        int layoutResource = 0;
         int viewType = getItemViewType(position);
 
         if (viewType == 0) {
-            layoutRecource = R.layout.my_message_item;
+            layoutResource = R.layout.my_message_item;
         } else {
-            layoutRecource = R.layout.your_message_item;
+            layoutResource = R.layout.your_message_item;
         }
 
 
@@ -46,7 +46,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
             viewHolder = (ViewHolder) convertView.getTag();
         } else {
             convertView = layoutInflater.inflate(
-                    layoutRecource, parent, false
+                    layoutResource, parent, false
             );
 
             viewHolder = new ViewHolder(convertView);
@@ -65,8 +65,8 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     public int getItemViewType(int position) {
 
         int flag;
-        ChatMessage chatMassage = message.get(position);
-        if (chatMassage.isMine()) {
+        ChatMessage chatMessage = message.get(position);
+        if (chatMessage.isMine()) {
             flag = 0;
         } else {
             flag = 1;

@@ -10,16 +10,16 @@
 
 
     <ListView
-        android:id="@+id/massageListView"
+        android:id="@+id/messageListView"
         android:divider="@android:color/transparent"
         android:transcriptMode="alwaysScroll"
         tools:listitem="@layout/message_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/sendMassageLayout"/>
+        android:layout_above="@id/sendMessageLayout"/>
 
     <LinearLayout
-        android:id="@+id/sendMassageLayout"
+        android:id="@+id/sendMessageLayout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,13 +32,13 @@
             android:layout_height="45dp"/>
 
         <EditText
-            android:id="@+id/massageEditText"
+            android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/sendMassageButton"
+            android:id="@+id/sendMessageButton"
             android:enabled="false"
             android:text="send"
             android:layout_width="wrap_content"

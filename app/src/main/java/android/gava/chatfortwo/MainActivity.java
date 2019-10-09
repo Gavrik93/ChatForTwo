@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ChatMessageAdapter adapter;
     private ProgressBar progressBar;
     private ImageButton sendImageButton;
-    private Button sendMassageButton;
+    private Button sendMessageButton;
     private EditText messageEditText;
 
     private String userName;
@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         sendImageButton = findViewById(R.id.sendPhotoButton);
-        sendMassageButton = findViewById(R.id.sendMassageButton);
-        messageEditText = findViewById(R.id.massageEditText);
+        sendMessageButton = findViewById(R.id.sendMessageButton);
+        messageEditText = findViewById(R.id.messageEditText);
 
 
-        messageListView = findViewById(R.id.massageListView);
-        List<ChatMessage> chatMassages = new ArrayList<>();
-        adapter = new ChatMessageAdapter(this, R.layout.message_item, chatMassages);
+        messageListView = findViewById(R.id.messageListView);
+        List<ChatMessage> chatMessages = new ArrayList<>();
+        adapter = new ChatMessageAdapter(this, R.layout.message_item, chatMessages);
 
         messageListView.setAdapter(adapter);
         //set invisible for progressBar
@@ -97,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 if (s.toString().trim().length() > 0) {
-                    sendMassageButton.setEnabled(true);
+                    sendMessageButton.setEnabled(true);
                 } else {
-                    sendMassageButton.setEnabled(false);
+                    sendMessageButton.setEnabled(false);
                 }
             }
 
@@ -110,23 +110,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //input in "@+id/massageEditText limits
+        //input in "@+id/messageEditText limits
         messageEditText.setFilters(new InputFilter[]
                 {new InputFilter.LengthFilter(250)});
 
-        sendMassageButton.setOnClickListener(new View.OnClickListener() {
+        sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatMessage massage = new ChatMessage();
-                massage.setText(messageEditText.getText().toString());
-                massage.setName(userName);
-                massage.setSender(auth.getCurrentUser().getUid());
-                massage.setRecipient(recipientUserId);
-                massage.setImageUrl(null);
+                ChatMessage message = new ChatMessage();
+                message.setText(messageEditText.getText().toString());
+                message.setName(userName);
+                message.setSender(auth.getCurrentUser().getUid());
+                message.setRecipient(recipientUserId);
+                message.setImageUrl(null);
 
-                messageDatabaseReference.push().setValue(massage);
+                messageDatabaseReference.push().setValue(message);
 
-                //Clear input in @+id/massageEditText
+                //Clear input in @+id/messageEditText
                 messageEditText.setText("");
 
             }
