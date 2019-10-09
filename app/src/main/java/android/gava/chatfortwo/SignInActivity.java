@@ -68,7 +68,7 @@ public class SignInActivity extends AppCompatActivity {
         //save users authentication
 
         if (auth.getCurrentUser() != null){
-            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+            startActivity(new Intent(SignInActivity.this, UserListActivity.class));
         }
     }
 
@@ -92,7 +92,7 @@ public class SignInActivity extends AppCompatActivity {
                                     FirebaseUser user = auth.getCurrentUser();
 
                                     Intent intent = new Intent(SignInActivity.this,
-                                            MainActivity.class);
+                                            UserListActivity.class);
                                     intent.putExtra("userName",nameEditText.getText().toString().trim());
                                     startActivity(intent);
                                     //updateUI();
@@ -137,7 +137,7 @@ public class SignInActivity extends AppCompatActivity {
                                     FirebaseUser user = auth.getCurrentUser();
                                     createUser(user);
                                     Intent intent = new Intent(SignInActivity.this,
-                                            MainActivity.class);
+                                            UserListActivity.class);
                                     intent.putExtra("userName",nameEditText.getText().toString().trim());
                                     startActivity(intent);
                                     // updateUI(user);

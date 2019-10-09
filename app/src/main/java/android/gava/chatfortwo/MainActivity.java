@@ -42,18 +42,32 @@ public class MainActivity extends AppCompatActivity {
     private EditText messageEditText;
 
     private String userName;
+    private String recipientUserId;
+    private String recipientUserName;
 
-    FirebaseDatabase database;
-    DatabaseReference messageDatabaseReference;
-    ChildEventListener messagesChildEventListener;
-    DatabaseReference usersDatabaseReference;
-    ChildEventListener usersChildEventListener;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
+    private DatabaseReference messageDatabaseReference;
+    private ChildEventListener messagesChildEventListener;
+    private DatabaseReference usersDatabaseReference;
+    private ChildEventListener usersChildEventListener;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+
+        //save intent from recycleView
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            userName = intent.getStringExtra("userName");
+            recipientUserId = intent.getStringExtra("recipientUserId");
+            recipientUserName = intent.getStringExtra("recipientUserName");
+        }
 
         database = FirebaseDatabase.getInstance();
         messageDatabaseReference = database.getReference().child("messages");
@@ -65,12 +79,7 @@ public class MainActivity extends AppCompatActivity {
         sendMassageButton = findViewById(R.id.sendMassageButton);
         messageEditText = findViewById(R.id.massageEditText);
 
-        Intent intent = getIntent();
-        if (intent != null){
-            userName = intent.getStringExtra("userName");
-        } else {
-            userName = "Default User";
-        }
+
 
 
         messageListView = findViewById(R.id.massageListView);
@@ -115,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 ChatMassage massage = new ChatMassage();
                 massage.setText(messageEditText.getText().toString());
                 massage.setName(userName);
+                massage.setSender(auth.getCurrentUser().getUid());
+                massage.setRecipient(recipientUserId);
                 massage.setImageUrl(null);
 
                 messageDatabaseReference.push().setValue(massage);
@@ -172,10 +183,22 @@ public class MainActivity extends AppCompatActivity {
         messagesChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ChatMassage massage =
+                ChatMassage message =
                         dataSnapshot.getValue(ChatMassage.class);
-                adapter.add(massage);
+
+                if (message.getSender().equals(auth.getCurrentUser().getUid())
+                        && message.getRecipient().equals(recipientUserId)) {
+                    message.setMine(true);
+                    message.setName(userName);
+                    adapter.add(message);
+                } else if (message.getRecipient().equals(auth.getCurrentUser().getUid())
+                        && message.getSender().equals(recipientUserId)) {
+                    message.setMine(false);
+                    adapter.add(message);
+                }
             }
+
+
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -202,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Sing out menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -225,10 +249,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //this part fix bug when i was in chat activity using back key i return to login activity
-    @Override
-    public void onBackPressed () {
-
-    }
 
 }

@@ -17,7 +17,7 @@ public class UserAdapter
     private ArrayList<User> users;
     private OnUserClickListener listener;
 
-    private interface OnUserClickListener {
+    public interface OnUserClickListener {
         void onUserClick(int position);
     }
 
