@@ -21,3 +21,8 @@ Chat with registered user:  send text message in real time(Using Firebase real-t
 - Get the source code 
  - git clone --recursive https://github.com/Gavrik93/ChatForTwo.git
 - Open the project with Android Studio, let it build the project and hit Run
+
+# For functional check
+login : admin@gmail.com 
+user:admin 
+pass:111111
