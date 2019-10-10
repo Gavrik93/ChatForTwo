@@ -148,8 +148,6 @@ public class UserListActivity extends AppCompatActivity {
         }
     }
 
-
-    //this part fix bug when i was in chat activity using back key i return to login activity
     @Override
     public void onBackPressed() {
 

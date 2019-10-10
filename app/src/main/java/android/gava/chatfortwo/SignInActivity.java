@@ -66,7 +66,6 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         //save users authentication
-
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(SignInActivity.this, UserListActivity.class));
         }
@@ -95,16 +94,13 @@ public class SignInActivity extends AppCompatActivity {
                                             UserListActivity.class);
                                     intent.putExtra("userName", nameEditText.getText().toString().trim());
                                     startActivity(intent);
-                                    //updateUI();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                                     Toast.makeText(SignInActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
-                                    // updateUI(null);
                                 }
 
-                                // ...
                             }
 
 
@@ -140,13 +136,13 @@ public class SignInActivity extends AppCompatActivity {
                                             UserListActivity.class);
                                     intent.putExtra("userName", nameEditText.getText().toString().trim());
                                     startActivity(intent);
-                                    // updateUI(user);
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                     Toast.makeText(SignInActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
-                                    // updateUI(null);
+
                                 }
 
                             }
@@ -189,9 +185,7 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    //this part fix bug when i was in chat activity using back key i return to login activity
     @Override
     public void onBackPressed() {
-
     }
 }
