@@ -1,13 +1,21 @@
-# ChatForTwo for Faifly
-Сhat app for 2 and more people
 
-# Что было реализовано :
+## Feature
+1. Sign in, sign out, register.
 
-- Экран авторизации и регистрации пользователя :
-  - Содержит поле ввода имейла пользователя, его логин, пароль, подтверждение пароля.
- ( По умолчанию пользователь попадает на экран регистрации нового пользователя .Если пользователь зарегистрирован то имеется возможность изменить меню на вход предварительно зарегистрированного пользователя путем нажатия на "Tap to login")
-- Второй экран содержит в себе список зарегистрированных пользователей в котором можно выбрать того с кем вы будете вести чат (в Toolbar имеется меню Sign out)
-- Экран чата содержит в себе поле ввода сообщения, кнопку отправки сообщения, отображение сообщения от пользователя, имя пользователя. (в Toolbar имеется меню Sign out)
+Register: allow user register a new account with email, username and password
+Signin: user must signin with email, username and password to use app.
 
-- Для реализации авторизации и базы данных был использован сервис Firebase т.к он имеет обширную документацию для создания чата под Android и имеется возможность сразу отследить результат реализации
+2. Chat
 
+Chat with registered user:  send text message in real time(Using Firebase real-time-database).
+<p>
+<img src ="https://user-images.githubusercontent.com/31073918/66551649-8dc63900-eb50-11e9-85f5-6e79893f976b.jpg" height="350" width="200">
+<img src ="https://user-images.githubusercontent.com/31073918/66551648-8dc63900-eb50-11e9-98bc-1efdcd028b76.jpg" height="350" width="200">
+<img src ="https://user-images.githubusercontent.com/31073918/66551646-8dc63900-eb50-11e9-856f-8ab2d774be24.jpg" height="350" width="200">
+</p>
+
+# Build & Run the application
+
+- Get the source code 
+ - git clone --recursive https://github.com/Gavrik93/ChatForTwo.git
+- Open the project with Android Studio, let it build the project and hit Run
