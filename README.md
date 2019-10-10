@@ -1,5 +1,7 @@
 
-## Features
+## Intorduction
+Chat for two people
+
 1. Sign in, sign out, register.
 
 Register: allow user register a new account with email, username and password
